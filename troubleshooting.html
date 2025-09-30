@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Troubleshooting Guide - Bookmark GPT Pro</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #e74c3c;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #7f8c8d;
+        }
+        h4 {
+            color: #95a5a6;
+        }
+        strong {
+            color: #2c3e50;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+            color: #ecf0f1;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #f39c12;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #17a2b8;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #28a745;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        .back-link {
+            background: #3498db;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        .back-link:hover {
+            background: #2980b9;
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+
+        <h1>Ollama Troubleshooting Guide</h1>
+
+        <div class="warning">
+            <strong>Common Issue:</strong> If you encounter "Address Already in Use" errors, this guide will help you resolve the issue.
+        </div>
+
+        <h2>Fixing "Address Already in Use" Errors</h2>
+        <p>If you encounter <code>Error: listen tcp 127.0.0.1:11434: bind: address already in use</code>, follow the steps below to resolve the issue.</p>
+
+        <h2>Step-by-Step Instructions</h2>
+
+        <h3>Step 1: Check What's Using the Port</h3>
+        <pre><code>lsof -ti:11434</code></pre>
+        <p>This will show the process IDs (PIDs) using port 11434.</p>
+
+        <h3>Step 2: Kill Existing Processes</h3>
+        <pre><code># Kill specific processes (replace PID with actual process ID from Step 1)
+kill -9 [PID]
+
+# Or kill all Ollama processes at once
+pkill -f ollama</code></pre>
+
+        <h3>Step 3: If Ollama Keeps Restarting</h3>
+        <p>The Ollama desktop app may automatically restart the service. Try:</p>
+
+        <h4>macOS:</h4>
+        <pre><code># Quit the Ollama application entirely
+osascript -e 'quit app "Ollama"'
+
+# Or force quit if the above doesn't work
+pkill -f "Ollama.app"</code></pre>
+
+        <h4>Windows:</h4>
+        <pre><code># Kill Ollama processes
+taskkill /F /IM ollama.exe
+
+# Or stop the Ollama service
+net stop ollama</code></pre>
+
+        <h4>Linux:</h4>
+        <pre><code># Kill all Ollama processes
+pkill -f ollama
+
+# Or stop systemd service if applicable
+sudo systemctl stop ollama</code></pre>
+
+        <h3>Step 4: Verify Port is Free</h3>
+        <pre><code>lsof -ti:11434</code></pre>
+        <p>This should return nothing if the port is free.</p>
+
+        <h3>Step 5: Start Ollama Fresh</h3>
+        <pre><code># Using custom start script
+./start-ollama.sh
+
+# Or start directly
+ollama serve
+
+# Or start with specific configuration
+OLLAMA_ORIGINS="chrome-extension://*,http://localhost:*,https://localhost:*" ollama serve</code></pre>
+
+        <h2>Quick Commands Reference</h2>
+
+        <h3>Initial Troubleshooting</h3>
+        <pre><code>ollama --help                    # Check available Ollama commands
+ollama ps                        # List running Ollama models
+pkill ollama                     # Attempt to kill Ollama processes</code></pre>
+
+        <h3>Port Investigation and Process Management</h3>
+        <pre><code>lsof -ti:11434                   # Find processes using port 11434
+kill -9 [PID]                    # Force kill specific processes
+pkill -f ollama                  # Kill all processes matching "ollama"
+ps aux | grep ollama             # List all Ollama-related processes</code></pre>
+
+        <h2>Additional Tips</h2>
+
+        <h3>Persistent Restarts</h3>
+        <p>If Ollama keeps restarting automatically:</p>
+        <ul>
+            <li><strong>macOS</strong>: Check System Preferences → Users & Groups → Login Items</li>
+            <li><strong>Windows</strong>: Check Task Manager → Startup tab</li>
+            <li><strong>Linux</strong>: Check <code>systemctl list-unit-files | grep ollama</code></li>
+        </ul>
+
+        <h3>Multiple Instances</h3>
+        <p>Sometimes multiple Ollama instances can run simultaneously:</p>
+        <pre><code>ps aux | grep ollama</code></pre>
+        <p>Use this to see all running instances and kill them individually.</p>
+
+        <h3>Alternative Ports</h3>
+        <p>You can configure Ollama to use a different port:</p>
+        <pre><code># Set custom port
+export OLLAMA_HOST=127.0.0.1:11435
+ollama serve
+
+# Or with full configuration
+OLLAMA_HOST=127.0.0.1:11435 OLLAMA_ORIGINS="chrome-extension://*" ollama serve</code></pre>
+
+        <h2>Common Error Messages</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Error</th>
+                    <th>Cause</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>bind: address already in use</code></td>
+                    <td>Port 11434 is occupied</td>
+                    <td>Follow steps 1-5 above</td>
+                </tr>
+                <tr>
+                    <td><code>connection refused</code></td>
+                    <td>Ollama not running</td>
+                    <td>Start Ollama with <code>ollama serve</code></td>
+                </tr>
+                <tr>
+                    <td><code>403 Forbidden</code></td>
+                    <td>CORS issues</td>
+                    <td>Start with <code>OLLAMA_ORIGINS</code> environment variable</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>Understanding CORS Issues (403 Forbidden)</h2>
+        <div class="info">
+            <h3>What is CORS and Why Does It Happen?</h3>
+            <p><strong>CORS (Cross-Origin Resource Sharing)</strong> is a security feature built into web browsers to protect users from malicious websites.</p>
+
+            <h4>Why Browsers Block Local Software Access</h4>
+            <p>By default, web browsers prevent websites and extensions from accessing software running on your computer. This is a <strong>security feature</strong>, not a bug. Here's why:</p>
+            <ul>
+                <li><strong>Protection from malicious websites</strong>: Without CORS, any website could try to access local software on your computer</li>
+                <li><strong>Privacy protection</strong>: Prevents unauthorized access to local services and data</li>
+                <li><strong>Security barrier</strong>: Stops potential attacks that could exploit local software vulnerabilities</li>
+            </ul>
+
+            <h4>Why Our Extension Needs Special Permission</h4>
+            <p>Bookmark GPT Pro needs to communicate with Ollama (running on your computer) to provide AI features. Since this crosses the security boundary between "web content" and "local software," we need to explicitly tell Ollama to allow this connection.</p>
+
+            <h4>The Solution: OLLAMA_ORIGINS</h4>
+            <p>When you start Ollama with <code>OLLAMA_ORIGINS="chrome-extension://*"</code>, you're essentially telling Ollama: <em>"It's okay to accept requests from Chrome extensions, I trust them."</em></p>
+
+            <p><strong>This is safe</strong> because:</p>
+            <ul>
+                <li>You're only allowing Chrome extensions (not random websites)</li>
+                <li>Only extensions you've installed can communicate with Ollama</li>
+                <li>The permission is explicit and under your control</li>
+            </ul>
+        </div>
+
+        <div class="info">
+            <h3>Key Issue Resolution</h3>
+            <p>In most cases, the key issue is that the Ollama desktop application automatically restarts the service even after killing individual processes. This is why you need to quit the application itself using the methods in Step 3.</p>
+        </div>
+
+        <h2>Environment Variables</h2>
+        <p>For browser extensions and web applications, make sure to set:</p>
+        <pre><code>export OLLAMA_ORIGINS="chrome-extension://*,http://localhost:*,https://localhost:*"
+export OLLAMA_HOST="127.0.0.1:11434"</code></pre>
+        <p>Then start Ollama:</p>
+        <pre><code>ollama serve</code></pre>
+
+        <h2>Prevention Tips</h2>
+        <div class="success">
+            <ol>
+                <li><strong>Proper Shutdown</strong>: Always properly quit Ollama using <code>ollama stop [model-name]</code> before shutting down</li>
+                <li><strong>Desktop App</strong>: If using the desktop app, quit it properly from the menu bar rather than force-killing processes</li>
+                <li><strong>Check Before Starting</strong>: Use <code>lsof -ti:11434</code> to check if the port is free before starting Ollama</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
