@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookmark GPT Pro - Documentation Hub</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            text-decoration: none;
+            color: inherit;
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        .card p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .card-features {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .card-features li {
+            padding: 8px 0;
+            border-bottom: 1px solid #ecf0f1;
+            color: #34495e;
+            font-size: 0.9rem;
+        }
+        .card-features li:last-child {
+            border-bottom: none;
+        }
+        .card-features li:before {
+            content: "✓";
+            color: #27ae60;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .privacy-card {
+            border-left: 4px solid #3498db;
+        }
+        .troubleshoot-card {
+            border-left: 4px solid #e74c3c;
+        }
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            opacity: 0.8;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(255,255,255,0.5);
+        }
+        .footer a:hover {
+            border-bottom: 1px solid white;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .cards {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .container {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔖 Bookmark GPT Pro</h1>
+            <p>Documentation & Support Hub</p>
+        </div>
+
+        <div class="cards">
+            <a href="privacy-policy.html" class="card privacy-card">
+                <div class="card-icon">🛡️</div>
+                <h2>Privacy Policy</h2>
+                <p>Learn how we protect your data and what information we collect (spoiler: we keep everything local!).</p>
+                <ul class="card-features">
+                    <li>Local data storage only</li>
+                    <li>No tracking or analytics</li>
+                    <li>Your bookmarks stay private</li>
+                    <li>Optional cloud AI with your API key</li>
+                    <li>Complete transparency</li>
+                </ul>
+            </a>
+
+            <a href="troubleshooting.html" class="card troubleshoot-card">
+                <div class="card-icon">🔧</div>
+                <h2>Troubleshooting Guide</h2>
+                <p>Having issues with Ollama? Find solutions to common problems and error messages.</p>
+                <ul class="card-features">
+                    <li>Fix "Address already in use" errors</li>
+                    <li>Port binding issues</li>
+                    <li>Process management</li>
+                    <li>Environment setup</li>
+                    <li>Step-by-step solutions</li>
+                </ul>
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Need more help? Contact us at <a href="mailto:bookmarkgptpro.help@gmail.com">bookmarkgptpro.help@gmail.com</a></p>
+            <p style="margin-top: 30px; font-size: 0.9rem;">
+                Bookmark GPT Pro - Search and chat with your bookmarks using AI
+            </p>
+        </div>
+    </div>
+</body>
+</html>
